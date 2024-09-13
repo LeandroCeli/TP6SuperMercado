@@ -5,14 +5,31 @@
  */
 package view;
 
+import clases.Producto;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.util.TreeMap;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Celi Leandro
  */
 public class MenuPrincipal extends javax.swing.JFrame {
 
+    static TreeMap<Long, Producto> productos;
+
     public MenuPrincipal() {
         initComponents();
+        productos = new TreeMap<>();
+        
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
+        // Establecer el tamaño del JFrame para que ocupe toda la pantalla
+        setSize(screenSize.width, screenSize.height);
+
+        // Mostrar el JFrame en el centro de la pantalla
+        setLocationRelativeTo(null);
     }
 
     @SuppressWarnings("unchecked")
@@ -54,6 +71,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenu1.add(jMenuItem4);
 
         jMenuItem5.setText("Salir");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem5);
 
         jMenuBar1.add(jMenu1);
@@ -61,12 +83,27 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenu2.setText("Consultas");
 
         jMenuItem1.setText("Consulta por Nombre");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem1);
 
         jMenuItem2.setText("Consulta por Precio");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem2);
 
         jMenuItem3.setText("Consulta por Rubro");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem3);
 
         jMenuBar1.add(jMenu2);
@@ -90,13 +127,39 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-     GestionProducto gestion = new GestionProducto();
-     jDPaneEscritorio.add(gestion);
-     
-     gestion.setVisible(true);
+        GestionProducto gestion = new GestionProducto();
+        jDPaneEscritorio.add(gestion);
+        gestion.setVisible(true);
 
 // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+
+        int repuesta = JOptionPane.showConfirmDialog(this, "Esta seguro de Salir ?", "Atencion", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+
+        if (repuesta == 0) {
+            dispose();
+        }
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        ConsultaNombre consultaNombre = new ConsultaNombre();
+        jDPaneEscritorio.add(consultaNombre);
+        consultaNombre.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        ConsultaPrecio consultaPrecio = new ConsultaPrecio();
+        jDPaneEscritorio.add(consultaPrecio);
+        consultaPrecio.setVisible(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        ConsultaRubro consultaRubro = new ConsultaRubro();
+        jDPaneEscritorio.add(consultaRubro);
+        consultaRubro.setVisible(true);// TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
