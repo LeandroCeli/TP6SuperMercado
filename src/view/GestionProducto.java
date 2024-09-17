@@ -5,6 +5,7 @@
  */
 package view;
 
+import clases.Producto;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
@@ -13,20 +14,25 @@ import javax.swing.JOptionPane;
  * @author Celi Leandro
  */
 public class GestionProducto extends javax.swing.JInternalFrame {
-
-    /**
-     * Creates new form GestionProducto
-     */
+    
+    Producto producto;
+    
     public GestionProducto() {
         initComponents();
+        producto = new Producto();
     }
-
+    
     public void clean() {
         jTFcodigo.setText("");
         jTFdescripcion.setText("");
         jTFprecio.setText("");
         jCBrubro.setSelectedIndex(0);
         jpStock.setValue(0);
+    }
+    
+    public boolean chequeo() {
+        String rubro = (String) jCBrubro.getSelectedItem();
+        return (jTFcodigo.getText().isEmpty() || jTFdescripcion.getText().isEmpty() || jTFprecio.getText().isEmpty() || rubro.equals("-") || (Integer) jpStock.getValue() == 0);
     }
 
     /**
@@ -73,6 +79,11 @@ public class GestionProducto extends javax.swing.JInternalFrame {
         jLabel3.setText("Filtro por categoria");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "Comestible", "Limpieza", "Perfumeria" }));
+        jComboBox1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jComboBox1KeyPressed(evt);
+            }
+        });
 
         jTable1.setBackground(new java.awt.Color(240, 240, 240));
         jTable1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 204, 204), null, null));
@@ -190,6 +201,11 @@ public class GestionProducto extends javax.swing.JInternalFrame {
         );
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/icons8-magnifying-glass-tilted-right-48.png"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/icons8-cross-mark-48.png"))); // NOI18N
         jButton2.setText("Cerrar");
@@ -209,6 +225,11 @@ public class GestionProducto extends javax.swing.JInternalFrame {
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/icons8-caja-de-producto-de-pelo-corto-50.png"))); // NOI18N
         jButton4.setText("Guardar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/icons8-marca-doble-30.png"))); // NOI18N
         jButton5.setText("Actualizar");
@@ -293,7 +314,7 @@ public class GestionProducto extends javax.swing.JInternalFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         int repuesta = JOptionPane.showConfirmDialog(this, "Esta seguro de Salir ?", "Atencion", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
-
+        
         if (repuesta == 0) {
             dispose();
         }        // TODO add your handling code here:
@@ -313,13 +334,38 @@ public class GestionProducto extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTFcodigoKeyTyped
 
     private void jTFprecioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFprecioKeyTyped
-       
+
         // atecnion cuando ingresa 2 comas 
         char car = evt.getKeyChar();
-        if (!Character.isDigit(car) && car != ',' && car != KeyEvent.VK_BACK_SPACE && car != KeyEvent.VK_DELETE) {
-            evt.consume();  
+        if (!Character.isDigit(car) && car != '.' && car != KeyEvent.VK_BACK_SPACE && car != KeyEvent.VK_DELETE) {
+            evt.consume();
         }        // TODO add your handling code here:
     }//GEN-LAST:event_jTFprecioKeyTyped
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        
+        if (!chequeo()) // Campos completos 
+        {
+            producto.setCodNumerico(Long.parseLong(jTFcodigo.getText()));
+            producto.setDescripcion(jTFdescripcion.getText());
+            producto.setPrecio(Double.parseDouble(jTFprecio.getText()));
+            producto.setRubro((String) jCBrubro.getSelectedItem());
+            producto.setStock((Integer) jpStock.getValue());
+            // Se Agrega Al TreeSet
+            MenuPrincipal.productos.put(Long.parseLong(jTFcodigo.getText()), producto);
+            JOptionPane.showMessageDialog(this, "El Cliente  fue agregado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Complete los campos ", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jComboBox1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox1KeyPressed
+                     
+    }//GEN-LAST:event_jComboBox1KeyPressed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
