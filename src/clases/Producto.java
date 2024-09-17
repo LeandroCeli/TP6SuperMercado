@@ -2,7 +2,7 @@ package clases;
 
 public class Producto 
 {
-   private int codNumerico;
+   private Long codNumerico;
    private String descripcion;
    private double precio;
    private int stock;
@@ -11,7 +11,7 @@ public class Producto
     public Producto() {
     }
 
-    public Producto(int codNumerico, String descripcion, double precio, int stock, String rubro) {
+    public Producto(Long codNumerico, String descripcion, double precio, int stock, String rubro) {
         this.codNumerico = codNumerico;
         this.descripcion = descripcion;
         this.precio = precio;
@@ -19,7 +19,7 @@ public class Producto
         this.rubro = rubro;
     }
 
-    public int getCodNumerico() {
+    public Long getCodNumerico() {
         return codNumerico;
     }
 
@@ -39,7 +39,7 @@ public class Producto
         return rubro;
     }
 
-    public void setCodNumerico(int codNumerico) {
+    public void setCodNumerico(Long codNumerico) {
         this.codNumerico = codNumerico;
     }
 
