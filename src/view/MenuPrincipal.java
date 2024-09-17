@@ -53,11 +53,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jDPaneEscritorio.setLayout(jDPaneEscritorioLayout);
         jDPaneEscritorioLayout.setHorizontalGroup(
             jDPaneEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 762, Short.MAX_VALUE)
+            .addGap(0, 797, Short.MAX_VALUE)
         );
         jDPaneEscritorioLayout.setVerticalGroup(
             jDPaneEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 692, Short.MAX_VALUE)
+            .addGap(0, 604, Short.MAX_VALUE)
         );
 
         jMenu1.setText("Administracion");
