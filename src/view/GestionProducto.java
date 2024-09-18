@@ -23,6 +23,7 @@ public class GestionProducto extends javax.swing.JInternalFrame {
     }
     
     public void clean() {
+        producto = new Producto();
         jTFcodigo.setText("");
         jTFdescripcion.setText("");
         jTFprecio.setText("");
@@ -66,7 +67,7 @@ public class GestionProducto extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        BotonGuardar = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
 
@@ -223,11 +224,11 @@ public class GestionProducto extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/icons8-caja-de-producto-de-pelo-corto-50.png"))); // NOI18N
-        jButton4.setText("Guardar");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        BotonGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/icons8-caja-de-producto-de-pelo-corto-50.png"))); // NOI18N
+        BotonGuardar.setText("Guardar");
+        BotonGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                BotonGuardarActionPerformed(evt);
             }
         });
 
@@ -266,7 +267,7 @@ public class GestionProducto extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton3)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(BotonGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(29, 29, 29)
                         .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -305,7 +306,7 @@ public class GestionProducto extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton4))))
+                            .addComponent(BotonGuardar))))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
@@ -342,22 +343,23 @@ public class GestionProducto extends javax.swing.JInternalFrame {
         }        // TODO add your handling code here:
     }//GEN-LAST:event_jTFprecioKeyTyped
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void BotonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonGuardarActionPerformed
         
         if (!chequeo()) // Campos completos 
-        {
+        {            
             producto.setCodNumerico(Long.parseLong(jTFcodigo.getText()));
             producto.setDescripcion(jTFdescripcion.getText());
             producto.setPrecio(Double.parseDouble(jTFprecio.getText()));
             producto.setRubro((String) jCBrubro.getSelectedItem());
             producto.setStock((Integer) jpStock.getValue());
             // Se Agrega Al TreeSet
-            MenuPrincipal.productos.put(Long.parseLong(jTFcodigo.getText()), producto);
+            MenuPrincipal.productos.put(producto.getCodNumerico(), producto);
             JOptionPane.showMessageDialog(this, "El Cliente  fue agregado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(this, "Complete los campos ", "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
-    }//GEN-LAST:event_jButton4ActionPerformed
+
+    }//GEN-LAST:event_BotonGuardarActionPerformed
 
     private void jComboBox1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox1KeyPressed
                      
@@ -369,10 +371,10 @@ public class GestionProducto extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BotonGuardar;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JComboBox<String> jCBrubro;

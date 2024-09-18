@@ -132,23 +132,7 @@ public class ConsultaRubro extends javax.swing.JInternalFrame {
         
         for (Map.Entry<Long, Producto> producto : MenuPrincipal.productos.entrySet()) {
             Producto aux = producto.getValue();
-            if (aux.getRubro().equals("Comestible")) {
-                modelo.addRow(new Object[]{
-                    aux.getCodNumerico(),
-                    aux.getDescripcion(),
-                    aux.getPrecio(),
-                    aux.getRubro(),
-                    aux.getStock()
-                });
-            } else if (aux.getRubro().equals("Limpieza")) {
-                modelo.addRow(new Object[]{
-                    aux.getCodNumerico(),
-                    aux.getDescripcion(),
-                    aux.getPrecio(),
-                    aux.getRubro(),
-                    aux.getStock()
-                });
-            } else if (aux.getRubro().equals("Perfumeria")) {
+            if (aux.getRubro().equals(Rubro)) {
                 modelo.addRow(new Object[]{
                     aux.getCodNumerico(),
                     aux.getDescripcion(),
