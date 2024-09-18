@@ -5,12 +5,17 @@
  */
 package view;
 
+import clases.Producto;
+import java.util.Map;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Celi Leandro
  */
 public class ConsultaRubro extends javax.swing.JInternalFrame {
 
+    private DefaultTableModel modelo = new DefaultTableModel();
     /**
      * Creates new form ConsultaRubro
      */
@@ -29,9 +34,9 @@ public class ConsultaRubro extends javax.swing.JInternalFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jCBrubtos = new javax.swing.JComboBox<>();
+        ComboRubros = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        TablaRubros = new javax.swing.JTable();
 
         setClosable(true);
 
@@ -41,14 +46,16 @@ public class ConsultaRubro extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setText("Rubro:");
 
-        jCBrubtos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "Comestible", "Limpieza", "Perfumeria" }));
+        ComboRubros.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar rubro", "Comestible", "Limpieza", "Perfumeria" }));
+        ComboRubros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboRubrosActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        TablaRubros.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Codigo ", "Descripcion", "Precio", "Categoria", "Stock"
@@ -57,12 +64,19 @@ public class ConsultaRubro extends javax.swing.JInternalFrame {
             Class[] types = new Class [] {
                 java.lang.Long.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(TablaRubros);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -73,7 +87,7 @@ public class ConsultaRubro extends javax.swing.JInternalFrame {
                 .addComponent(jLabel2)
                 .addGap(54, 54, 54)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCBrubtos, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ComboRubros, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(16, 16, 16)
                         .addComponent(jLabel1)))
@@ -90,7 +104,7 @@ public class ConsultaRubro extends javax.swing.JInternalFrame {
                 .addComponent(jLabel1)
                 .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCBrubtos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ComboRubros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -100,12 +114,58 @@ public class ConsultaRubro extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void ComboRubrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboRubrosActionPerformed
+            ComboRubros.removeItem("Seleccionar rubro");
+            cargarTabla((String)ComboRubros.getSelectedItem());       
+    }//GEN-LAST:event_ComboRubrosActionPerformed
+
+    public void cargarTabla(String Rubro) {
+        modelo.setRowCount(0);
+        
+        if (modelo.getColumnCount() == 0) {
+            modelo.addColumn("Codigo");
+            modelo.addColumn("Descripcion");
+            modelo.addColumn("Precio");
+            modelo.addColumn("Categoria");
+            modelo.addColumn("Stock");
+        }
+        
+        for (Map.Entry<Long, Producto> producto : MenuPrincipal.productos.entrySet()) {
+            Producto aux = producto.getValue();
+            if (aux.getRubro().equals("Comestible")) {
+                modelo.addRow(new Object[]{
+                    aux.getCodNumerico(),
+                    aux.getDescripcion(),
+                    aux.getPrecio(),
+                    aux.getRubro(),
+                    aux.getStock()
+                });
+            } else if (aux.getRubro().equals("Limpieza")) {
+                modelo.addRow(new Object[]{
+                    aux.getCodNumerico(),
+                    aux.getDescripcion(),
+                    aux.getPrecio(),
+                    aux.getRubro(),
+                    aux.getStock()
+                });
+            } else if (aux.getRubro().equals("Perfumeria")) {
+                modelo.addRow(new Object[]{
+                    aux.getCodNumerico(),
+                    aux.getDescripcion(),
+                    aux.getPrecio(),
+                    aux.getRubro(),
+                    aux.getStock()
+                });
+            }
+        }
+        TablaRubros.setModel(modelo);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> jCBrubtos;
+    private javax.swing.JComboBox<String> ComboRubros;
+    private javax.swing.JTable TablaRubros;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
