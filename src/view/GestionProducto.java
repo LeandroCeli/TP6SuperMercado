@@ -60,7 +60,7 @@ public class GestionProducto extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        ComboCategoria = new javax.swing.JComboBox<String>();
+        ComboCategoria = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtProductos = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
@@ -72,7 +72,7 @@ public class GestionProducto extends javax.swing.JInternalFrame {
         jTFcodigo = new javax.swing.JTextField();
         jTFdescripcion = new javax.swing.JTextField();
         jTFprecio = new javax.swing.JTextField();
-        jCBrubro = new javax.swing.JComboBox<String>();
+        jCBrubro = new javax.swing.JComboBox<>();
         jpStock = new javax.swing.JSpinner();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -91,7 +91,7 @@ public class GestionProducto extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Filtro por categoria");
 
-        ComboCategoria.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-", "Comestible", "Limpieza", "Perfumeria" }));
+        ComboCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "Comestible", "Limpieza", "Perfumeria" }));
         ComboCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ComboCategoriaActionPerformed(evt);
@@ -104,7 +104,7 @@ public class GestionProducto extends javax.swing.JInternalFrame {
         });
 
         jtProductos.setBackground(new java.awt.Color(240, 240, 240));
-        jtProductos.setBorder(new javax.swing.border.SoftBevelBorder(0, null, new java.awt.Color(204, 204, 204), null, null));
+        jtProductos.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 204, 204), null, null));
         jtProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -160,7 +160,8 @@ public class GestionProducto extends javax.swing.JInternalFrame {
             }
         });
 
-        jCBrubro.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-", "Comestible", "Limpieza", "Perfumeria" }));
+        jCBrubro.setEditable(true);
+        jCBrubro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "Comestible", "Limpieza", "Perfumeria" }));
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel9.setText("valores numericos");
@@ -448,8 +449,14 @@ public class GestionProducto extends javax.swing.JInternalFrame {
         jTFcodigo.setText(codigo + "");
         jTFdescripcion.setText(descripcion1);
         jTFprecio.setText(precio1 + "");
-        jCBrubro.setSelectedItem(0);
-        jpStock.setValue(0);
+
+        int valorStock = (Integer) jtProductos.getValueAt(fila, 3);
+
+        String valor = (String) jtProductos.getValueAt(fila, 4);
+
+        jCBrubro.setSelectedItem(valor);
+        jCBrubro.repaint();
+        jpStock.setValue(valorStock);
 
 
     }//GEN-LAST:event_jtProductosMouseClicked
