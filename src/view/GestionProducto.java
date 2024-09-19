@@ -16,10 +16,10 @@ import javax.swing.table.DefaultTableModel;
  * @author Celi Leandro
  */
 public class GestionProducto extends javax.swing.JInternalFrame {
-    
+
     Producto producto;
     private DefaultTableModel model = new DefaultTableModel();
-    
+
     public GestionProducto() {
         initComponents();
         cargarModelo();
@@ -33,7 +33,7 @@ public class GestionProducto extends javax.swing.JInternalFrame {
         jCBrubro.setEnabled(false);
         jpStock.setEnabled(false);
     }
-    
+
     public void clean() {
         producto = new Producto();
         jTFcodigo.setText("");
@@ -42,7 +42,7 @@ public class GestionProducto extends javax.swing.JInternalFrame {
         jCBrubro.setSelectedIndex(0);
         jpStock.setValue(0);
     }
-    
+
     public boolean chequeo() {
         String rubro = (String) jCBrubro.getSelectedItem();
         return (jTFcodigo.getText().isEmpty() || jTFdescripcion.getText().isEmpty() || jTFprecio.getText().isEmpty() || rubro.equals("-") || (Integer) jpStock.getValue() == 0);
@@ -357,7 +357,7 @@ public class GestionProducto extends javax.swing.JInternalFrame {
 
     private void ButonCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButonCerrarActionPerformed
         int repuesta = JOptionPane.showConfirmDialog(this, "Esta seguro de Salir ?", "Atencion", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
-        
+
         if (repuesta == 0) {
             dispose();
         }        // TODO add your handling code here:
@@ -386,9 +386,9 @@ public class GestionProducto extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTFprecioKeyTyped
 
     private void BotonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonGuardarActionPerformed
-        
+
         if (!chequeo()) // Campos completos 
-        {            
+        {
             producto.setCodNumerico(Long.parseLong(jTFcodigo.getText()));
             producto.setDescripcion(jTFdescripcion.getText());
             producto.setPrecio(Double.parseDouble(jTFprecio.getText()));
@@ -404,21 +404,25 @@ public class GestionProducto extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_BotonGuardarActionPerformed
 
     private void ComboCategoriaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ComboCategoriaKeyPressed
-                     
+
     }//GEN-LAST:event_ComboCategoriaKeyPressed
 
     private void BotonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonBuscarActionPerformed
-       int buscado = Integer.parseInt(jTFcodigo.getText());
-       model.setRowCount(0);
-      
-        for (Map.Entry<Long, Producto> entry : MenuPrincipal.productos.entrySet()) {
-            Long key = entry.getKey();
-            Producto value = entry.getValue();
-            if(value.getCodNumerico()==buscado){
-                model.addRow(new Object[]{key,value.getDescripcion(),value.getPrecio(),value.getStock(),value.getRubro()});
+
+        if (!jTFcodigo.getText().isEmpty()) {
+            model.setRowCount(0);
+            Producto articuloBuscado = (Producto) MenuPrincipal.productos.get(Long.parseLong(jTFcodigo.getText()));
+
+            if (articuloBuscado != null) {
+                model.addRow(new Object[]{articuloBuscado.getCodNumerico(), articuloBuscado.getDescripcion(), articuloBuscado.getPrecio(), articuloBuscado.getStock(), articuloBuscado.getRubro()});
+            } else {
+                JOptionPane.showMessageDialog(this, "No hay coincidencia", "Atencion!", JOptionPane.WARNING_MESSAGE);
             }
+
+        } else {
+            JOptionPane.showMessageDialog(this, "No ha ingresado ningun codigo", "Atencion!", JOptionPane.WARNING_MESSAGE);
         }
-       
+
     }//GEN-LAST:event_BotonBuscarActionPerformed
 
     private void BotonNuevoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BotonNuevoMouseClicked
@@ -434,22 +438,20 @@ public class GestionProducto extends javax.swing.JInternalFrame {
     private void jtProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtProductosMouseClicked
         // TODO add your handling code here:
         int fila = jtProductos.getSelectedRow();
-        
+
         BotonEliminar.setEnabled(true);
         BotonActualizar.setEnabled(true);
         long codigo = (Long) jtProductos.getValueAt(fila, 0);
         String descripcion1 = (String) jtProductos.getValueAt(fila, 1);
         Double precio1 = (Double) jtProductos.getValueAt(fila, 2);
-        
-        
-       
-        jTFcodigo.setText(codigo+"");
+
+        jTFcodigo.setText(codigo + "");
         jTFdescripcion.setText(descripcion1);
-        jTFprecio.setText(precio1+"");
+        jTFprecio.setText(precio1 + "");
         jCBrubro.setSelectedItem(0);
         jpStock.setValue(0);
-        
-        
+
+
     }//GEN-LAST:event_jtProductosMouseClicked
 
     private void jTFcodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFcodigoActionPerformed
@@ -463,31 +465,29 @@ public class GestionProducto extends javax.swing.JInternalFrame {
         for (Map.Entry<Long, Producto> entry : MenuPrincipal.productos.entrySet()) {
             Long key = entry.getKey();
             Producto value = entry.getValue();
-            if(value.getRubro().equals((String)ComboCategoria.getSelectedItem())){
-                model.addRow(new Object[]{key,value.getDescripcion(),value.getPrecio(),value.getStock(),value.getRubro()});
+            if (value.getRubro().equals((String) ComboCategoria.getSelectedItem())) {
+                model.addRow(new Object[]{key, value.getDescripcion(), value.getPrecio(), value.getStock(), value.getRubro()});
             }
         }
     }//GEN-LAST:event_ComboCategoriaActionPerformed
 
     private void BotonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonEliminarActionPerformed
         // TODO add your handling code here:
-        try{
-        int eliminado = jtProductos.getSelectedRow();
-        
-        MenuPrincipal.productos.remove(jtProductos.getValueAt(eliminado, 0));
-        model.removeRow(eliminado);
-        }
-        catch (ArrayIndexOutOfBoundsException e){
+        try {
+            int eliminado = jtProductos.getSelectedRow();
+
+            MenuPrincipal.productos.remove(jtProductos.getValueAt(eliminado, 0));
+            model.removeRow(eliminado);
+        } catch (ArrayIndexOutOfBoundsException e) {
             JOptionPane.showMessageDialog(this, "No hay ningun producto selecionado", "Seleccione un producto!", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_BotonEliminarActionPerformed
 
     private void BotonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonActualizarActionPerformed
         // TODO add your handling code here:
-        
-        
+
         if (!chequeo()) // Campos completos 
-        {            
+        {
             producto.setCodNumerico(Long.parseLong(jTFcodigo.getText()));
             producto.setDescripcion(jTFdescripcion.getText());
             producto.setPrecio(Double.parseDouble(jTFprecio.getText()));
@@ -531,8 +531,7 @@ public class GestionProducto extends javax.swing.JInternalFrame {
     private javax.swing.JTable jtProductos;
     // End of variables declaration//GEN-END:variables
 
-
-    private void cargarModelo(){
+    private void cargarModelo() {
         model.addColumn("Código");
         model.addColumn("Descripcion");
         model.addColumn("Precio");
@@ -540,5 +539,5 @@ public class GestionProducto extends javax.swing.JInternalFrame {
         model.addColumn("Categoria");
         jtProductos.setModel(model);
     }
-    
+
 }
