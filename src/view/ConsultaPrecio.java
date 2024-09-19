@@ -166,20 +166,19 @@ public class ConsultaPrecio extends javax.swing.JInternalFrame {
         double mnPrecio = Double.parseDouble(minPrecio.getText()); // Precio mínimo
         double mxPrecio = Double.parseDouble(maxPrecio.getText()); // Precio máximo
         
-        // Obtener el modelo de la tabla
+      
         DefaultTableModel model = (DefaultTableModel) tablaPrecio.getModel();
         
-        // Limpiar las filas actuales (opcional, si deseas reiniciar la tabla antes de filtrar)
+        
         model.setRowCount(0);
 
-        // Iterar sobre los productos y agregar los que cumplen con el filtro de precios
+        
         for (Map.Entry<Long, Producto> entry : MenuPrincipal.productos.entrySet()) {
             Long key = entry.getKey();
             Producto value = entry.getValue();
             
-            // Verificar si el precio del producto está entre el mínimo y el máximo
-            if (value.getPrecio() > mnPrecio && value.getPrecio() < mxPrecio) {
-                // Agregar el producto a la tabla
+            
+            if (value.getPrecio() > mnPrecio && value.getPrecio() < mxPrecio) {                
                 model.addRow(new Object[]{key, value.getDescripcion(), value.getPrecio(), value.getStock(), value.getRubro()});
             }
         }
