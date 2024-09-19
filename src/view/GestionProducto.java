@@ -396,7 +396,7 @@ public class GestionProducto extends javax.swing.JInternalFrame {
             producto.setStock((Integer) jpStock.getValue());
             // Se Agrega Al TreeSet
             MenuPrincipal.productos.put(producto.getCodNumerico(), producto);
-            JOptionPane.showMessageDialog(this, "El Cliente  fue agregado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "El producto fue agregado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(this, "Complete los campos ", "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
@@ -440,14 +440,14 @@ public class GestionProducto extends javax.swing.JInternalFrame {
         long codigo = (Long) jtProductos.getValueAt(fila, 0);
         String descripcion1 = (String) jtProductos.getValueAt(fila, 1);
         Double precio1 = (Double) jtProductos.getValueAt(fila, 2);
-        //String categoria1 = (String) jtProductos.getValueAt(fila, 4);
-        int stock1 = Integer.parseInt((String)jtProductos.getValueAt(fila, 3));
+        
+        
        
         jTFcodigo.setText(codigo+"");
         jTFdescripcion.setText(descripcion1);
         jTFprecio.setText(precio1+"");
-        //jCBrubro.setSelectedItem(categoria);
-        jpStock.setValue(stock1);
+        jCBrubro.setSelectedItem(0);
+        jpStock.setValue(0);
         
         
     }//GEN-LAST:event_jtProductosMouseClicked
@@ -485,6 +485,21 @@ public class GestionProducto extends javax.swing.JInternalFrame {
     private void BotonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonActualizarActionPerformed
         // TODO add your handling code here:
         
+        
+        if (!chequeo()) // Campos completos 
+        {            
+            producto.setCodNumerico(Long.parseLong(jTFcodigo.getText()));
+            producto.setDescripcion(jTFdescripcion.getText());
+            producto.setPrecio(Double.parseDouble(jTFprecio.getText()));
+            producto.setRubro((String) jCBrubro.getSelectedItem());
+            producto.setStock((Integer) jpStock.getValue());
+            // Se Agrega Al TreeSet
+            MenuPrincipal.productos.put(producto.getCodNumerico(), producto);
+            JOptionPane.showMessageDialog(this, "El producto fue actualizado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            BotonActualizar.setEnabled(false);
+        } else {
+            JOptionPane.showMessageDialog(this, "Complete todos los campos ", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_BotonActualizarActionPerformed
 
 
