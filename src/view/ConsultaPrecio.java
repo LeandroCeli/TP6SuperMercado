@@ -5,7 +5,10 @@
  */
 package view;
 
+import clases.Producto;
+import java.util.Map;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -33,7 +36,7 @@ public class ConsultaPrecio extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaPrecio = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
         maxPrecio = new javax.swing.JTextPane();
         jScrollPane5 = new javax.swing.JScrollPane();
@@ -49,7 +52,7 @@ public class ConsultaPrecio extends javax.swing.JInternalFrame {
 
         jLabel3.setText("y");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaPrecio.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -60,18 +63,18 @@ public class ConsultaPrecio extends javax.swing.JInternalFrame {
                 "Codigo", "Descripcion", "Precio", "Categoria", "Stock"
             }
         ));
-        jTable1.addContainerListener(new java.awt.event.ContainerAdapter() {
+        tablaPrecio.addContainerListener(new java.awt.event.ContainerAdapter() {
             public void componentAdded(java.awt.event.ContainerEvent evt) {
-                jTable1ComponentAdded(evt);
+                tablaPrecioComponentAdded(evt);
             }
         });
-        jScrollPane3.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setHeaderValue("Codigo");
-            jTable1.getColumnModel().getColumn(1).setHeaderValue("Descripcion");
-            jTable1.getColumnModel().getColumn(2).setHeaderValue("Precio");
-            jTable1.getColumnModel().getColumn(3).setHeaderValue("Categoria");
-            jTable1.getColumnModel().getColumn(4).setHeaderValue("Stock");
+        jScrollPane3.setViewportView(tablaPrecio);
+        if (tablaPrecio.getColumnModel().getColumnCount() > 0) {
+            tablaPrecio.getColumnModel().getColumn(0).setHeaderValue("Codigo");
+            tablaPrecio.getColumnModel().getColumn(1).setHeaderValue("Descripcion");
+            tablaPrecio.getColumnModel().getColumn(2).setHeaderValue("Precio");
+            tablaPrecio.getColumnModel().getColumn(3).setHeaderValue("Categoria");
+            tablaPrecio.getColumnModel().getColumn(4).setHeaderValue("Stock");
         }
 
         maxPrecio.setPreferredSize(new java.awt.Dimension(76, 20));
@@ -159,23 +162,37 @@ public class ConsultaPrecio extends javax.swing.JInternalFrame {
 
     private void botonBuscarPrecioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonBuscarPrecioMouseClicked
         // TODO add your handling code here:
-        try{
-            double mnPrecio = Double.parseDouble(minPrecio.getText());
-            double mxPrecio = Double.parseDouble(maxPrecio.getText());
+    try {
+        double mnPrecio = Double.parseDouble(minPrecio.getText()); // Precio mínimo
+        double mxPrecio = Double.parseDouble(maxPrecio.getText()); // Precio máximo
+        
+        // Obtener el modelo de la tabla
+        DefaultTableModel model = (DefaultTableModel) tablaPrecio.getModel();
+        
+        // Limpiar las filas actuales (opcional, si deseas reiniciar la tabla antes de filtrar)
+        model.setRowCount(0);
+
+        // Iterar sobre los productos y agregar los que cumplen con el filtro de precios
+        for (Map.Entry<Long, Producto> entry : MenuPrincipal.productos.entrySet()) {
+            Long key = entry.getKey();
+            Producto value = entry.getValue();
             
-             
-            
-            //ni palida idea de como comparar, quisiera usar filter pero no se como joraca hacerlo
-            
+            // Verificar si el precio del producto está entre el mínimo y el máximo
+            if (value.getPrecio() > mnPrecio && value.getPrecio() < mxPrecio) {
+                // Agregar el producto a la tabla
+                model.addRow(new Object[]{key, value.getDescripcion(), value.getPrecio(), value.getStock(), value.getRubro()});
+            }
+        }
+        
         }catch (NumberFormatException e){
             JOptionPane.showMessageDialog(this, "Por favor, ingrese valores numéricos válidos.");
         }
     }//GEN-LAST:event_botonBuscarPrecioMouseClicked
 
-    private void jTable1ComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_jTable1ComponentAdded
+    private void tablaPrecioComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_tablaPrecioComponentAdded
         // TODO add your handling code here:
         
-    }//GEN-LAST:event_jTable1ComponentAdded
+    }//GEN-LAST:event_tablaPrecioComponentAdded
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -186,8 +203,8 @@ public class ConsultaPrecio extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextPane maxPrecio;
     private javax.swing.JTextPane minPrecio;
+    private javax.swing.JTable tablaPrecio;
     // End of variables declaration//GEN-END:variables
 }
