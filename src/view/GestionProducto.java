@@ -18,7 +18,12 @@ import javax.swing.table.DefaultTableModel;
 public class GestionProducto extends javax.swing.JInternalFrame {
     
     Producto producto;
-    private DefaultTableModel model = new DefaultTableModel();
+    private DefaultTableModel model = new DefaultTableModel(){
+        @Override
+    public boolean isCellEditable(int row, int column) {
+        return false;
+    }
+    };
     
     public GestionProducto() {
         initComponents();
