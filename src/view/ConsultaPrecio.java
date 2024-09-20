@@ -37,68 +37,48 @@ public class ConsultaPrecio extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tablaPrecio = new javax.swing.JTable();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        maxPrecio = new javax.swing.JTextPane();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        minPrecio = new javax.swing.JTextPane();
-        botonBuscarPrecio = new java.awt.Button();
+        BotonGuardarPrecio = new javax.swing.JButton();
+        minPrecio = new javax.swing.JTextField();
+        maxPrecio = new javax.swing.JTextField();
 
         setClosable(true);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(153, 153, 255));
         jLabel1.setText("Listado Por Precio");
 
-        jLabel2.setText("Entre $");
+        jLabel2.setText("Entre:");
 
         jLabel3.setText("y");
 
         tablaPrecio.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Codigo", "Descripcion", "Precio", "Categoria", "Stock"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tablaPrecio.addContainerListener(new java.awt.event.ContainerAdapter() {
             public void componentAdded(java.awt.event.ContainerEvent evt) {
                 tablaPrecioComponentAdded(evt);
             }
         });
         jScrollPane3.setViewportView(tablaPrecio);
-        if (tablaPrecio.getColumnModel().getColumnCount() > 0) {
-            tablaPrecio.getColumnModel().getColumn(0).setHeaderValue("Codigo");
-            tablaPrecio.getColumnModel().getColumn(1).setHeaderValue("Descripcion");
-            tablaPrecio.getColumnModel().getColumn(2).setHeaderValue("Precio");
-            tablaPrecio.getColumnModel().getColumn(3).setHeaderValue("Categoria");
-            tablaPrecio.getColumnModel().getColumn(4).setHeaderValue("Stock");
-        }
 
-        maxPrecio.setPreferredSize(new java.awt.Dimension(76, 20));
-        maxPrecio.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                maxPrecioKeyTyped(evt);
-            }
-        });
-        jScrollPane4.setViewportView(maxPrecio);
-
-        minPrecio.setName(""); // NOI18N
-        minPrecio.setPreferredSize(new java.awt.Dimension(76, 20));
-        minPrecio.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                minPrecioKeyTyped(evt);
-            }
-        });
-        jScrollPane5.setViewportView(minPrecio);
-
-        botonBuscarPrecio.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        botonBuscarPrecio.setLabel("button1");
-        botonBuscarPrecio.addMouseListener(new java.awt.event.MouseAdapter() {
+        BotonGuardarPrecio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/icons8-magnifying-glass-tilted-right-48.png"))); // NOI18N
+        BotonGuardarPrecio.setText("Buscar");
+        BotonGuardarPrecio.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                botonBuscarPrecioMouseClicked(evt);
+                BotonGuardarPrecioMouseClicked(evt);
             }
         });
 
@@ -107,62 +87,56 @@ public class ConsultaPrecio extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(47, Short.MAX_VALUE))
+                .addGap(43, 43, 43)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel3)
+                                .addComponent(minPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(botonBuscarPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(91, 91, 91))))
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(maxPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(38, 38, 38)
+                        .addComponent(BotonGuardarPrecio)
+                        .addGap(36, 36, 36))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(botonBuscarPrecio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(40, 40, 40)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(maxPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(minPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(BotonGuardarPrecio))
+                .addGap(37, 37, 37)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addContainerGap(138, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void minPrecioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_minPrecioKeyTyped
-      
-      
-    }//GEN-LAST:event_minPrecioKeyTyped
-
-    private void maxPrecioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_maxPrecioKeyTyped
+    private void tablaPrecioComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_tablaPrecioComponentAdded
         // TODO add your handling code here:
-      
-    }//GEN-LAST:event_maxPrecioKeyTyped
+        
+    }//GEN-LAST:event_tablaPrecioComponentAdded
 
-    private void botonBuscarPrecioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonBuscarPrecioMouseClicked
-        // TODO add your handling code here:
-    try {
+    private void BotonGuardarPrecioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BotonGuardarPrecioMouseClicked
+        try {
         double mnPrecio = Double.parseDouble(minPrecio.getText()); // Precio mínimo
         double mxPrecio = Double.parseDouble(maxPrecio.getText()); // Precio máximo
         
@@ -186,24 +160,17 @@ public class ConsultaPrecio extends javax.swing.JInternalFrame {
         }catch (NumberFormatException e){
             JOptionPane.showMessageDialog(this, "Por favor, ingrese valores numéricos válidos.");
         }
-    }//GEN-LAST:event_botonBuscarPrecioMouseClicked
-
-    private void tablaPrecioComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_tablaPrecioComponentAdded
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_tablaPrecioComponentAdded
+    }//GEN-LAST:event_BotonGuardarPrecioMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private java.awt.Button botonBuscarPrecio;
+    private javax.swing.JButton BotonGuardarPrecio;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTextPane maxPrecio;
-    private javax.swing.JTextPane minPrecio;
+    private javax.swing.JTextField maxPrecio;
+    private javax.swing.JTextField minPrecio;
     private javax.swing.JTable tablaPrecio;
     // End of variables declaration//GEN-END:variables
 }

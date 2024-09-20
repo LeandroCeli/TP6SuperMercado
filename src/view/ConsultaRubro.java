@@ -41,6 +41,7 @@ public class ConsultaRubro extends javax.swing.JInternalFrame {
         setClosable(true);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(153, 153, 255));
         jLabel1.setText("Listado por Rubro");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N

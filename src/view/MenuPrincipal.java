@@ -7,9 +7,12 @@ package view;
 
 import clases.Producto;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.TreeMap;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import java.awt.Graphics;
 
 /**
  *
@@ -22,21 +25,19 @@ public class MenuPrincipal extends javax.swing.JFrame {
     public MenuPrincipal() {
         initComponents();
         productos = new TreeMap<>();
-        
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-
-        // Establecer el tamaño del JFrame para que ocupe toda la pantalla
-        setSize(screenSize.width, screenSize.height);
-
-        // Mostrar el JFrame en el centro de la pantalla
-        setLocationRelativeTo(null);
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jDPaneEscritorio = new javax.swing.JDesktopPane();
+        ImageIcon imagen = new ImageIcon(getClass().getResource("/iconos/R.jpeg"));
+        Image miImagen = imagen.getImage();
+        jDPaneEscritorio = new javax.swing.JDesktopPane(){
+            public void paintComponent(Graphics a){
+                a.drawImage(miImagen, 0, 0, jDPaneEscritorio.getWidth(), jDPaneEscritorio.getHeight(), this);
+            }
+        };
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
@@ -53,11 +54,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jDPaneEscritorio.setLayout(jDPaneEscritorioLayout);
         jDPaneEscritorioLayout.setHorizontalGroup(
             jDPaneEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 797, Short.MAX_VALUE)
+            .addGap(0, 1019, Short.MAX_VALUE)
         );
         jDPaneEscritorioLayout.setVerticalGroup(
             jDPaneEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 604, Short.MAX_VALUE)
+            .addGap(0, 686, Short.MAX_VALUE)
         );
 
         jMenu1.setText("Administracion");
@@ -114,9 +115,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jDPaneEscritorio)
-                .addContainerGap())
+            .addComponent(jDPaneEscritorio)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -124,6 +123,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
@@ -133,7 +133,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
 // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem4ActionPerformed
-
+    
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
 
         int repuesta = JOptionPane.showConfirmDialog(this, "Esta seguro de Salir ?", "Atencion", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
@@ -190,6 +190,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new MenuPrincipal().setVisible(true);
             }
