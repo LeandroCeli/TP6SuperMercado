@@ -15,7 +15,12 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ConsultaRubro extends javax.swing.JInternalFrame {
 
-    private DefaultTableModel modelo = new DefaultTableModel();
+    private DefaultTableModel modelo = new DefaultTableModel(){
+        @Override
+    public boolean isCellEditable(int row, int column) {
+        return false; // Hace que ninguna celda sea editable
+    }
+    };
     /**
      * Creates new form ConsultaRubro
      */
